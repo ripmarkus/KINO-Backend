@@ -1,0 +1,30 @@
+# Git
+.git
+.gitignore
+
+# Maven
+target/
+!target/*.jar
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Environment
+.env
+.env.*
+
+# Documentation
+README.md
+HELP.md
+
+# CI/CD
+.github/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
