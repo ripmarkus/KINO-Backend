@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import java.math.BigDecimal;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,7 +23,7 @@ public class Reservation {
     
     private LocalDateTime reservationDate;
     private Boolean paid;
-    private BigDecimal totalPrice;
+    private Double totalPrice;
     
     @ManyToOne
     private Customer customer;
