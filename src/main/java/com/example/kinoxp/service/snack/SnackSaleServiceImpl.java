@@ -1,5 +1,5 @@
 package com.example.kinoxp.service.snack;
 
-public class SnackSaleServiceImpl {
+public class SnackSaleServiceImpl implements SnackSaleService{
 
 }
