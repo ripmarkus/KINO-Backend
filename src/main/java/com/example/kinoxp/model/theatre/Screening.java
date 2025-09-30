@@ -1,7 +1,7 @@
-package com.example.kinoxp.model.movie;
+package com.example.kinoxp.model.theatre;
 
 import com.example.kinoxp.model.employee.Employee;
-import com.example.kinoxp.model.theatre.Theatre;
+import com.example.kinoxp.model.movie.Movie;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
