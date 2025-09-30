@@ -15,6 +15,7 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seatId;
     
+    @Column(name = "seat_row")
     private Integer rowNumber;
     private Integer seatNumber;
     

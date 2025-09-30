@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -18,6 +16,6 @@ public class SnackItem {
     private Integer itemId;
     
     private String name;
-    private BigDecimal price;
+    private Double price;
     private Integer stock;
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import java.math.BigDecimal;
+
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -21,7 +21,7 @@ public class SnackSale {
     private Integer saleId;
     
     private LocalDateTime dateTime;
-    private BigDecimal totalPrice;
+    private double totalPrice;
     
     @ManyToOne
     private Employee salesClerk;
