@@ -1,7 +1,7 @@
 package com.example.kinoxp.service.movie;
 
 import com.example.kinoxp.model.movie.Movie;
-import com.example.kinoxp.repository.MovieRepo;
+import com.example.kinoxp.repository.mvoie.MovieRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,17 +25,17 @@ public class MovieServiceImpl implements MovieService {
     public Optional<Movie> findById(Integer id) {
         return movieRepo.findById(id);
     }
-
+    
     @Override
     public List<Movie> findAll() {
         return movieRepo.findAll();
     }
-
+    
     @Override
     public Movie save(Movie movie) {
         return movieRepo.save(movie);
     }
-
+    
     @Override
     public void deleteById(Integer id) {
         movieRepo.deleteById(id);

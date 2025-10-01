@@ -1,7 +1,7 @@
 package com.example.kinoxp.service.employee;
 
 import com.example.kinoxp.model.employee.Employee;
-import com.example.kinoxp.repository.EmployeeRepo;
+import com.example.kinoxp.repository.employee.EmployeeRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,17 +25,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Optional<Employee> findById(Integer id) {
         return employeeRepo.findById(id);
     }
-
+    
     @Override
     public List<Employee> findAll() {
         return employeeRepo.findAll();
     }
-
+    
     @Override
     public Employee save(Employee employee) {
         return employeeRepo.save(employee);
     }
-
+    
     @Override
     public void deleteById(Integer id) {
         employeeRepo.deleteById(id);

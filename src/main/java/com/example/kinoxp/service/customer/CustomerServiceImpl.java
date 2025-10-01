@@ -1,7 +1,7 @@
 package com.example.kinoxp.service.customer;
 
 import com.example.kinoxp.model.customer.Customer;
-import com.example.kinoxp.repository.CustomerRepo;
+import com.example.kinoxp.repository.customer.CustomerRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,17 +25,17 @@ public class CustomerServiceImpl implements CustomerService {
     public Optional<Customer> findById(Integer id) {
         return customerRepo.findById(id);
     }
-
+    
     @Override
     public List<Customer> findAll() {
         return customerRepo.findAll();
     }
-
+    
     @Override
     public Customer save(Customer customer) {
         return customerRepo.save(customer);
     }
-
+    
     @Override
     public void deleteById(Integer id) {
         customerRepo.deleteById(id);

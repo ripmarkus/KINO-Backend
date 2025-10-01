@@ -1,4 +1,4 @@
-package com.example.kinoxp.repository;
+package com.example.kinoxp.repository.Booking;
 
 import com.example.kinoxp.model.booking.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;

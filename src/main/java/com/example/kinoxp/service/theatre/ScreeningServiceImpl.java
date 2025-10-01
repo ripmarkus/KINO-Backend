@@ -25,17 +25,17 @@ public class ScreeningServiceImpl implements ScreeningService {
     public Optional<Screening> findById(Integer id) {
         return screeningRepo.findById(id);
     }
-
+    
     @Override
     public List<Screening> findAll() {
         return screeningRepo.findAll();
     }
-
+    
     @Override
     public Screening save(Screening screening) {
         return screeningRepo.save(screening);
     }
-
+    
     @Override
     public void deleteById(Integer id) {
         screeningRepo.deleteById(id);

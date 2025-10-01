@@ -25,17 +25,17 @@ public class SnackSaleServiceImpl implements SnackSaleService {
     public Optional<SnackSale> findById(Integer id) {
         return snackSaleRepo.findById(id);
     }
-
+    
     @Override
     public List<SnackSale> findAll() {
         return snackSaleRepo.findAll();
     }
-
+    
     @Override
     public SnackSale save(SnackSale snackSale) {
         return snackSaleRepo.save(snackSale);
     }
-
+    
     @Override
     public void deleteById(Integer id) {
         snackSaleRepo.deleteById(id);

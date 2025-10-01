@@ -25,17 +25,17 @@ public class SnackItemServiceImpl implements SnackItemService {
     public Optional<SnackItem> findById(Integer id) {
         return snackItemRepo.findById(id);
     }
-
+    
     @Override
     public List<SnackItem> findAll() {
         return snackItemRepo.findAll();
     }
-
+    
     @Override
     public SnackItem save(SnackItem snackItem) {
         return snackItemRepo.save(snackItem);
     }
-
+    
     @Override
     public void deleteById(Integer id) {
         snackItemRepo.deleteById(id);

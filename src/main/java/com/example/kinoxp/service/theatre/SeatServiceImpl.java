@@ -1,7 +1,7 @@
 package com.example.kinoxp.service.theatre;
 
 import com.example.kinoxp.model.theatre.Seat;
-import com.example.kinoxp.repository.SeatRepo;
+import com.example.kinoxp.repository.Theatre.SeatRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,17 +25,17 @@ public class SeatServiceImpl implements SeatService {
     public Optional<Seat> findById(Integer id) {
         return seatRepo.findById(id);
     }
-
+    
     @Override
     public List<Seat> findAll() {
         return seatRepo.findAll();
     }
-
+    
     @Override
     public Seat save(Seat seat) {
         return seatRepo.save(seat);
     }
-
+    
     @Override
     public void deleteById(Integer id) {
         seatRepo.deleteById(id);
