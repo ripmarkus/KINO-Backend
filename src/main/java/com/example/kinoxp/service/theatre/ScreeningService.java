@@ -11,4 +11,5 @@ public interface ScreeningService {
     List<Screening> findAll();
     Screening save(Screening screening);
     void deleteById(Integer id);
+    Screening getRequiredScreening(Integer id);
 }
