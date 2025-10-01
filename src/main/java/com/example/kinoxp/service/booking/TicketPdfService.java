@@ -87,7 +87,7 @@ public class TicketPdfService {
                     + (reservation.getPaid() ? " (Betalt)" : " (Ikke betalt)"), normalFont));
 
 
-            String qrText = "http://localhost:8080/reservations/" + reservation.getReservationId() + " .pdf";
+            String qrText = "http://localhost:8080/reservations/" + reservation.getReservationId() + ".pdf";
 
             Image qrImg = createQrImage(qrText, 150, 150);
             doc.add(new Paragraph("\n"));
