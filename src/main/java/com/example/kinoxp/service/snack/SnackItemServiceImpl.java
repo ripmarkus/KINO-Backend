@@ -1,7 +1,7 @@
 package com.example.kinoxp.service.snack;
 
 import com.example.kinoxp.model.snack.SnackItem;
-import com.example.kinoxp.repository.SnackItemRepo;
+import com.example.kinoxp.repository.Snack.SnackItemRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

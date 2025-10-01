@@ -1,7 +1,7 @@
 package com.example.kinoxp.service.theatre;
 
 import com.example.kinoxp.model.theatre.Screening;
-import com.example.kinoxp.repository.ScreeningRepo;
+import com.example.kinoxp.repository.Theatre.ScreeningRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
