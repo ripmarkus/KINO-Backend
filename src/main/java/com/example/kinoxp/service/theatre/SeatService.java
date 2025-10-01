@@ -1,13 +1,14 @@
 package com.example.kinoxp.service.theatre;
 
-import com.example.kinoxp.model.booking.Ticket;
+import com.example.kinoxp.model.theatre.Seat;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SeatService {
-    void existsById(Integer id);
-    void findById(Integer id);
-    List<Iterable> findAll();
-    void save(Ticket ticket);
+    boolean existsById(Integer id);
+    Optional<Seat> findById(Integer id);
+    List<Seat> findAll();
+    Seat save(Seat seat);
     void deleteById(Integer id);
 }
