@@ -1,7 +1,7 @@
 package com.example.kinoxp.repository;
 
-import com.example.kinoxp.model.snack.SnackItem;
+import com.example.kinoxp.model.theatre.Theatre;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TheatreRepo extends JpaRepository<SnackItem,Integer> {
+public interface TheatreRepo extends JpaRepository<Theatre,Integer> {
 }

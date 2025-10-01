@@ -1,4 +1,4 @@
-package com.example.kinoxp.repository;
+package com.example.kinoxp.repository.Theatre;
 
 import com.example.kinoxp.model.theatre.Screening;
 import org.springframework.data.jpa.repository.JpaRepository;
