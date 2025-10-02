@@ -59,8 +59,7 @@ public class PlanningController {
     @PutMapping("/screenings/{id}/movie/{newMovieId}")
     public ResponseEntity<Screening> replaceMovie(@PathVariable Integer id, @PathVariable Integer newMovieId) {
         Screening screening = screeningService.getRequiredScreening(id);
-        Movie movie = movieService.getRequiredMovie(newMovieId);
-
+        Movie movie =   movieService.getRequiredMovie(newMovieId);
         screening.setMovie(movie);
         Screening updatedScreening = screeningService.save(screening);
         return ResponseEntity.ok(updatedScreening);
