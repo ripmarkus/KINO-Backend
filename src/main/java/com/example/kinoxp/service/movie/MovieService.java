@@ -11,4 +11,5 @@ public interface MovieService {
     List<Movie> findAll();
     Movie save(Movie movie);
     void deleteById(Integer id);
+    Movie getRequiredMovie(Integer id);
 }
