@@ -2,7 +2,9 @@ package com.example.kinoxp.service.movie;
 
 import com.example.kinoxp.model.movie.Movie;
 import com.example.kinoxp.repository.movie.MovieRepo;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +16,11 @@ public class MovieServiceImpl implements MovieService {
     
     public MovieServiceImpl(MovieRepo movieRepo) {
         this.movieRepo = movieRepo;
+    }
+
+    public Movie getRequiredMovie(Integer id) {
+        return movieRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found"));
     }
 
     @Override
