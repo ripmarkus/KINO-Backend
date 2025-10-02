@@ -1,4 +1,4 @@
-package com.example.kinoxp.repository.mvoie;
+package com.example.kinoxp.repository.movie;
 
 import com.example.kinoxp.model.movie.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;

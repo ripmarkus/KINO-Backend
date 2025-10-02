@@ -1,7 +1,7 @@
 package com.example.kinoxp.service.movie;
 
 import com.example.kinoxp.model.movie.Genre;
-import com.example.kinoxp.repository.mvoie.GenreRepo;
+import com.example.kinoxp.repository.movie.GenreRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
