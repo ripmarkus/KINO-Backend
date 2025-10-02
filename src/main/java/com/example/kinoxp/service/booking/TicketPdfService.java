@@ -36,12 +36,11 @@ public class TicketPdfService {
 
     private final ReservationRepo reservationRepo;
     private final TicketRepo ticketRepo;
-    private final ScreeningRepo screeningRepo;
 
-    public TicketPdfService(ReservationRepo reservationRepo, TicketRepo ticketRepo, ScreeningRepo screeningRepo) {
+
+    public TicketPdfService(ReservationRepo reservationRepo, TicketRepo ticketRepo) {
         this.reservationRepo = reservationRepo;
         this.ticketRepo = ticketRepo;
-        this.screeningRepo = screeningRepo;
     }
 
     public byte[] generateReservationPdf(Integer reservationId) {
@@ -69,8 +68,8 @@ public class TicketPdfService {
             String showTime = screening.getDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
 
 
-            doc.add(new Paragraph("Film: " + movie.getTitle(), normalFont));
-            doc.add(new Paragraph("Dato/Tid: " + showTime, normalFont));
+            doc.add(new Paragraph("Movie: " + movie.getTitle(), normalFont));
+            doc.add(new Paragraph("Date / Time: " + showTime, normalFont));
             doc.add(new Paragraph("Sal: " + theatre.getName(), normalFont));
 
             doc.add(new Paragraph("Kunde: " + reservation.getCustomer().getName(), normalFont));
@@ -87,7 +86,7 @@ public class TicketPdfService {
                     + (reservation.getPaid() ? " (Betalt)" : " (Ikke betalt)"), normalFont));
 
 
-            String qrText = "http://localhost:8080/reservations/" + reservation.getReservationId() + ".pdf";
+            String qrText = "http://localhost:8080/reservations/" + reservation.getReservationId();
 
             Image qrImg = createQrImage(qrText, 150, 150);
             doc.add(new Paragraph("\n"));
