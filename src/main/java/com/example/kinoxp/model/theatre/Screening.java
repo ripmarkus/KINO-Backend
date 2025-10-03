@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -36,31 +38,10 @@ public class Screening {
     @ManyToOne
     private Employee operator;
     
-    @ManyToMany
-    private Set<Seat> availableSeats = new HashSet<>();
-    
-    @ManyToMany
-    private Set<Seat> reservedSeats = new HashSet<>();
-    
     public void calculateEndTime() {
         if (startTime != null && movie != null && movie.getDuration() != null) {
             this.endTime = startTime.plusMinutes(movie.getDuration());
         }
     }
-    
-    public boolean reserveSeats(Set<Seat> seatsToReserve) {
-        if (!availableSeats.containsAll(seatsToReserve)) {
-            return false;
-        }
-        availableSeats.removeAll(seatsToReserve);
-        reservedSeats.addAll(seatsToReserve);
-        return true;
-    }
-    
-    // Helper method to initialize available seats when screening is created
-    public void initializeSeats(Set<Seat> allTheatreSeats) {
-        availableSeats.clear();
-        availableSeats.addAll(allTheatreSeats);
-        reservedSeats.clear();
-    }
+
 }

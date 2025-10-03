@@ -58,17 +58,4 @@ public class ReservationServiceImpl implements ReservationService {
         reservationRepo.deleteById(id);
     }
 
-    @Override
-    public Reservation createReservation(Integer screeningId, Integer customerId) {
-        // Get required entities
-        Screening screening = screeningService.checkIfScreeningExists(screeningId);
-        Customer customer = customerService.getRequiredCustomer(customerId);
-        
-        Reservation reservation = new Reservation();
-        reservation.setScreening(screening);
-        reservation.setCustomer(customer);
-        reservation.setReservationDate(LocalDateTime.now());
-        reservation.setPaid(false);
-        return reservationRepo.save(reservation);
-    }
 }

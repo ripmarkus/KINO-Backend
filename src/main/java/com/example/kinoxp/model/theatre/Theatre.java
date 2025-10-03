@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -18,4 +20,7 @@ public class Theatre {
     private String name;
     private Integer numRows;
     private Integer seatsPerRow;
+
+    @OneToMany(mappedBy = "theater")
+    private Set<Seat> seats;
 }

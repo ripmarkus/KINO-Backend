@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Data
@@ -32,4 +33,7 @@ public class Reservation {
     
     @ManyToOne
     private Employee salesClerk;
+
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ReservationSeat> reservationSeats;
 }

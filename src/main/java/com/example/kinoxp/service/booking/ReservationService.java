@@ -12,7 +12,5 @@ public interface ReservationService {
     Reservation save(Reservation reservation);
     void deleteById(Integer id);
     Reservation getRequiredReservation(Integer id);
-    
-    // Simplified method for creating reservations
-    Reservation createReservation(Integer screeningId, Integer customerId);
+
 }
