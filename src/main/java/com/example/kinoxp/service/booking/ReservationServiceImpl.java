@@ -1,9 +1,16 @@
 package com.example.kinoxp.service.booking;
 
 import com.example.kinoxp.model.booking.Reservation;
+import com.example.kinoxp.model.customer.Customer;
+import com.example.kinoxp.model.theatre.Screening;
 import com.example.kinoxp.repository.Booking.ReservationRepo;
+import com.example.kinoxp.service.customer.CustomerService;
+import com.example.kinoxp.service.theatre.ScreeningService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,9 +18,19 @@ import java.util.Optional;
 public class ReservationServiceImpl implements ReservationService {
     
     private final ReservationRepo reservationRepo;
+    private final ScreeningService screeningService;
+    private final CustomerService customerService;
     
-    public ReservationServiceImpl(ReservationRepo reservationRepo) {
+    public ReservationServiceImpl(ReservationRepo reservationRepo, ScreeningService screeningService, 
+                                CustomerService customerService) {
         this.reservationRepo = reservationRepo;
+        this.screeningService = screeningService;
+        this.customerService = customerService;
+    }
+
+    public Reservation getRequiredReservation(Integer id) {
+        return reservationRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found"));
     }
 
     @Override
@@ -39,5 +56,19 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public void deleteById(Integer id) {
         reservationRepo.deleteById(id);
+    }
+
+    @Override
+    public Reservation createReservation(Integer screeningId, Integer customerId) {
+        // Get required entities
+        Screening screening = screeningService.checkIfScreeningExists(screeningId);
+        Customer customer = customerService.getRequiredCustomer(customerId);
+        
+        Reservation reservation = new Reservation();
+        reservation.setScreening(screening);
+        reservation.setCustomer(customer);
+        reservation.setReservationDate(LocalDateTime.now());
+        reservation.setPaid(false);
+        return reservationRepo.save(reservation);
     }
 }

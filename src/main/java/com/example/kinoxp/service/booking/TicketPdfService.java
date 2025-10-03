@@ -66,7 +66,7 @@ public class TicketPdfService {
             Screening screening = reservation.getScreening();
             Movie movie = screening.getMovie();
             Theatre theatre = screening.getTheatre();
-            String showTime = screening.getDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+            String showTime = screening.getStartTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
 
 
             doc.add(new Paragraph("Film: " + movie.getTitle(), normalFont));

@@ -11,4 +11,8 @@ public interface SeatService {
     List<Seat> findAll();
     Seat save(Seat seat);
     void deleteById(Integer id);
+    Seat getRequiredSeat(Integer id);
+    
+    // Basic method for getting theatre seats
+    List<Seat> findByTheatreId(Integer theatreId);
 }

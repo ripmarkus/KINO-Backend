@@ -11,4 +11,5 @@ public interface CustomerService {
     List<Customer> findAll();
     Customer save(Customer customer);
     void deleteById(Integer id);
+    Customer getRequiredCustomer(Integer id);
 }
