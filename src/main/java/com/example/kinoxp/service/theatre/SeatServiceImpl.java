@@ -1,6 +1,7 @@
 package com.example.kinoxp.service.theatre;
 
 import com.example.kinoxp.model.theatre.Seat;
+import com.example.kinoxp.repository.Booking.ReservationSeatRepo;
 import com.example.kinoxp.repository.Theatre.SeatRepo;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import java.util.Optional;
 public class SeatServiceImpl implements SeatService {
     
     private final SeatRepo seatRepo;
-    
+
     public SeatServiceImpl(SeatRepo seatRepo) {
         this.seatRepo = seatRepo;
     }
@@ -48,8 +49,5 @@ public class SeatServiceImpl implements SeatService {
         seatRepo.deleteById(id);
     }
 
-    @Override
-    public List<Seat> findByTheatreId(Integer theatreId) {
-        return seatRepo.findByTheatre_TheatreId(theatreId);
-    }
+
 }

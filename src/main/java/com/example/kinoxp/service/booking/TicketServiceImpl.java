@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -54,14 +55,12 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public void createTicketsForReservation(Reservation reservation, List<Integer> seatIds) {
+    public void createTicketsForReservation(Reservation reservation, Set<Integer> seatIds) {
         for (Integer seatId : seatIds) {
             Seat seat = seatService.getRequiredSeat(seatId);
-            
             Ticket ticket = new Ticket();
             ticket.setReservation(reservation);
             ticket.setSeat(seat);
-            
             save(ticket);
         }
     }

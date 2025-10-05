@@ -1,6 +1,6 @@
 package com.example.kinoxp.RestController;
 
-import com.example.kinoxp.service.booking.TicketPdfService;
+import com.example.kinoxp.service.booking.TicketPdfServiceImpl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReservationTicketRestController {
 
 
-    private final TicketPdfService pdfService;
+    private final TicketPdfServiceImpl pdfService;
 
 
-    public ReservationTicketRestController(TicketPdfService pdfService) {
+    public ReservationTicketRestController(TicketPdfServiceImpl pdfService) {
         this.pdfService = pdfService;
     }
 

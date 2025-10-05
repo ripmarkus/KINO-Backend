@@ -3,10 +3,12 @@ package com.example.kinoxp.controller;
 import com.example.kinoxp.model.theatre.Screening;
 import com.example.kinoxp.model.theatre.Seat;
 import com.example.kinoxp.service.theatre.ScreeningService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/screenings")
@@ -20,33 +22,36 @@ public class ScreeningController {
     }
 
     @GetMapping
-    public List<Screening> getAllScreenings() {
-        return screeningService.findAll();
+    public ResponseEntity<List<Screening>> getAllScreenings() {
+        return ResponseEntity.ok(screeningService.findAll());
     }
 
     @GetMapping("/{id}")
-    public Screening getScreening(@PathVariable Integer id) {
-        return screeningService.getRequiredScreening(id);
+    public ResponseEntity<Screening> getScreening(@PathVariable Integer id) {
+        return ResponseEntity.ok(screeningService.getRequiredScreening(id));
     }
 
     @PostMapping
-    public Screening createScreening(@RequestBody Screening screening) {
-        return screeningService.save(screening);
+    public ResponseEntity<Screening> createScreening(@RequestBody Screening screening) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(screeningService.save(screening));
     }
 
     @PutMapping("/{id}")
-    public Screening updateScreening(@PathVariable Integer id, @RequestBody Screening screening) {
+    public ResponseEntity<Screening> updateScreening(@PathVariable Integer id, @RequestBody Screening screening) {
         screening.setShowId(id);
-        return screeningService.save(screening);
+        Screening updated = screeningService.save(screening);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteScreening(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteScreening(@PathVariable Integer id) {
         screeningService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
+
     @GetMapping("/{id}/available-seats")
-    public Set<Seat> getAvailableSeats(@PathVariable Integer id) {
-        return screeningService.getAvailableSeats(id);
+    public ResponseEntity<List<Seat>> getAvailableSeats(@PathVariable Integer id) {
+        return ResponseEntity.ok(screeningService.getAvailableSeats(id));
     }
 }

@@ -5,6 +5,7 @@ import com.example.kinoxp.model.booking.Reservation;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface TicketService {
     boolean existsById(Integer id);
@@ -13,7 +14,5 @@ public interface TicketService {
     Ticket save(Ticket ticket);
     void deleteById(Integer id);
     Ticket getRequiredTicket(Integer id);
-    
-    // Simplified method for creating tickets for a reservation
-    void createTicketsForReservation(Reservation reservation, List<Integer> seatIds);
+    void createTicketsForReservation(Reservation reservation, Set<Integer> seatIds);
 }

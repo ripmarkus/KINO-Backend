@@ -16,11 +16,8 @@ public interface ScreeningService {
     Screening save(Screening screening);
     void deleteById(Integer id);
     Screening checkIfScreeningExists(Integer id);
-
     List<Screening> getScreeningsByDateRange(LocalDate startDate, LocalDate endDate, Integer theatreId);
     Screening updateScreeningSchedule(Integer screeningId, Map<String, Object> updates);
-
     Screening getRequiredScreening(Integer screeningId);
-
-    Set<Seat> getAvailableSeats(Integer screeningId);
+    List<Seat> getAvailableSeats(Integer id);
 }
