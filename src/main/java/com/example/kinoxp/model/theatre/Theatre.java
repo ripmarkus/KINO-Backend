@@ -24,10 +24,6 @@ public class Theatre {
     private Integer numRows;
     private Integer seatsPerRow;
 
-    // CIRCULAR REFERENCE FIX: @JsonIgnore prevents infinite loop during JSON serialization
-    // Without this: Theatre → Seats → Theatre → Seats → ... (infinite recursion)
-    // With @JsonIgnore: Theatre JSON won't include seats collection at all
-    // Use dedicated endpoints like GET /api/theatres/{id}/seats if you need seat details
     @OneToMany(mappedBy = "theatre")
     @JsonIgnore
     private Set<Seat> seats;

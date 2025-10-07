@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(
         uniqueConstraints = {
-                // FIXED: Use actual database column names instead of JPA defaults
                 // Database columns: screening_show_id, seat_seat_id (not screening_id, seat_id)
                 @UniqueConstraint(columnNames = {"screening_show_id", "seat_seat_id"})
         }

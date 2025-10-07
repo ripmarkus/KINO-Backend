@@ -15,7 +15,6 @@ public class ReservationTicketRestController {
 
     private final TicketPdfServiceImpl pdfService;
 
-
     public ReservationTicketRestController(TicketPdfServiceImpl pdfService) {
         this.pdfService = pdfService;
     }
