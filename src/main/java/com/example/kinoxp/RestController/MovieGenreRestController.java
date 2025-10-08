@@ -50,6 +50,7 @@ public class MovieGenreRestController {
         return ResponseEntity.ok(movieService.save(movie));
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteMovie(@PathVariable Integer id) {
         if (!movieService.existsById(id)) {
@@ -59,7 +60,6 @@ public class MovieGenreRestController {
         return ResponseEntity.noContent().build();
     }
 
-    // GET alle genre (Endpoint for dropdown menu)
     @GetMapping("/genres")
     public ResponseEntity<List<Genre>> getAllGenres() {
         return ResponseEntity.ok(genreService.findAll());
