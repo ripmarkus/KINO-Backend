@@ -1,5 +1,6 @@
 package com.example.kinoxp.controller;
 
+import com.example.kinoxp.DTO.theatre.ScreeningRequest;
 import com.example.kinoxp.model.theatre.Screening;
 import com.example.kinoxp.model.theatre.Seat;
 import com.example.kinoxp.service.theatre.ScreeningService;
@@ -32,16 +33,32 @@ public class ScreeningController {
     }
 
     @PostMapping
-    public ResponseEntity<Screening> createScreening(@RequestBody Screening screening) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(screeningService.save(screening));
+    public ResponseEntity<Screening> createScreening(@RequestBody ScreeningRequest request) {
+        Screening screening = screeningService.save(
+                request.getMovieId(),
+                request.getTheatreId(),
+                request.getStartTime(),
+                request.getEmployeeId()
+        );
+        return ResponseEntity.status(HttpStatus.CREATED).body(screening);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Screening> updateScreening(@PathVariable Integer id, @RequestBody Screening screening) {
-        screening.setShowId(id);
-        Screening updated = screeningService.save(screening);
+    public ResponseEntity<Screening> updateScreening(
+            @PathVariable Integer id,
+            @RequestBody ScreeningRequest request) {
+
+        Screening updated = screeningService.updateScreening(
+                id,
+                request.getMovieId(),
+                request.getTheatreId(),
+                request.getStartTime(),
+                request.getEmployeeId()
+        );
+
         return ResponseEntity.ok(updated);
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteScreening(@PathVariable Integer id) {
