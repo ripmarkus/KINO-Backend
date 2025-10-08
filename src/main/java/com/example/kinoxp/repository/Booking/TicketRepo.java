@@ -15,6 +15,8 @@ public interface TicketRepo extends JpaRepository<Ticket,Integer> {
                where t.reservation.reservationId = :reservationId
                order by s.rowNumber, s.seatNumber
             """)
-
     List<Ticket> findByReservationIdWithSeats(Integer reservationId);
+    
+    // New methods for cache-based seat availability
+    List<Ticket> findByReservation_Screening_ShowId(Integer screeningId);
 }

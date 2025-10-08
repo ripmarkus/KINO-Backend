@@ -19,7 +19,8 @@ public class Screening {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer showId;
     
-    private LocalDateTime dateTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     
     @Enumerated(EnumType.STRING)
     private ScreeningStatus status;
@@ -32,4 +33,11 @@ public class Screening {
     
     @ManyToOne
     private Employee operator;
+    
+    public void calculateEndTime() {
+        if (startTime != null && movie != null && movie.getDuration() != null) {
+            this.endTime = startTime.plusMinutes(movie.getDuration());
+        }
+    }
+
 }

@@ -11,4 +11,5 @@ public interface EmployeeService {
     List<Employee> findAll();
     Employee save(Employee employee);
     void deleteById(Integer id);
+    Employee getRequiredEmployee(Integer id);  // Add this method
 }

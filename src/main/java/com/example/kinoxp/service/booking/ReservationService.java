@@ -1,5 +1,6 @@
 package com.example.kinoxp.service.booking;
 
+import com.example.kinoxp.DTO.booking.CreateReservationRequest;
 import com.example.kinoxp.model.booking.Reservation;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface ReservationService {
     List<Reservation> findAll();
     Reservation save(Reservation reservation);
     void deleteById(Integer id);
+    Reservation getRequiredReservation(Integer id);
+    Reservation createReservationWithSeats(CreateReservationRequest request);
 }
