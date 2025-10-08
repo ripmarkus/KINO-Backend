@@ -43,7 +43,7 @@ public class ScreeningController {
         return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteScreening(@PathVariable Integer id) {
         screeningService.deleteById(id);
         return ResponseEntity.noContent().build();
