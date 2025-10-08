@@ -16,7 +16,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/scheduling")
-@CrossOrigin(origins = "*")
 public class SchedulingController {
 
     private final ScreeningService screeningService;
