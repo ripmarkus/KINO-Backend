@@ -20,7 +20,7 @@ public class ScreeningController {
 
     public ScreeningController(ScreeningService screeningService) {
         this.screeningService = screeningService;
-    }
+    }   
 
     @GetMapping
     public ResponseEntity<List<Screening>> getAllScreenings() {
