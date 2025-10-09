@@ -1,5 +1,6 @@
 package com.example.kinoxp.RestController;
 
+import com.example.kinoxp.DTO.movie.MovieRequest;
 import com.example.kinoxp.model.movie.Movie;
 import com.example.kinoxp.model.movie.Genre;
 import com.example.kinoxp.service.movie.MovieService;
@@ -36,8 +37,8 @@ public class MovieGenreRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
-        Movie savedMovie = movieService.save(movie);
+    public ResponseEntity<Movie> createMovie(@RequestBody MovieRequest movieRequest) {
+        Movie savedMovie = movieService.createMovie(movieRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);
     }
 
