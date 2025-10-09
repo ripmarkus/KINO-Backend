@@ -1,5 +1,6 @@
 package com.example.kinoxp.RestController;
 
+import com.example.kinoxp.DTO.movie.MovieRequest;
 import com.example.kinoxp.model.movie.Movie;
 import com.example.kinoxp.model.movie.Genre;
 import com.example.kinoxp.service.movie.MovieService;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/movies")
+@CrossOrigin(origins = "*")
 public class MovieGenreRestController {
 
     private final MovieService movieService;
@@ -35,8 +37,8 @@ public class MovieGenreRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
-        Movie savedMovie = movieService.save(movie);
+    public ResponseEntity<Movie> createMovie(@RequestBody MovieRequest movieRequest) {
+        Movie savedMovie = movieService.createMovie(movieRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);
     }
 
@@ -49,7 +51,8 @@ public class MovieGenreRestController {
         return ResponseEntity.ok(movieService.save(movie));
     }
 
-    @DeleteMapping("/{id}")
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteMovie(@PathVariable Integer id) {
         if (!movieService.existsById(id)) {
             return ResponseEntity.notFound().build();
@@ -58,7 +61,6 @@ public class MovieGenreRestController {
         return ResponseEntity.noContent().build();
     }
 
-    // GET alle genre (Endpoint for dropdown menu)
     @GetMapping("/genres")
     public ResponseEntity<List<Genre>> getAllGenres() {
         return ResponseEntity.ok(genreService.findAll());

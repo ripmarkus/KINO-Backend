@@ -51,19 +51,19 @@ public class SchedulingController {
         return getScreenings(startOfWeek, endOfWeek, null);
     }
 
-    @PostMapping("/assign")
+    /*@PostMapping("/assign")
     public ResponseEntity<Screening> assignMovieToTheatre(@RequestBody Screening screening) {
         screening.calculateEndTime();
         Screening savedScreening = screeningService.save(screening);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedScreening);
-    }
+    }*/
 
     @PutMapping("/screenings/{id}")
     public ResponseEntity<Screening> changeDateOfScreening(@PathVariable Integer id, @RequestBody Map<String, Object> updates) {
         return ResponseEntity.ok(screeningService.updateScreeningSchedule(id, updates));
     }
 
-    @PutMapping("/screenings/{id}/movie/{newMovieId}")
+    /*@PutMapping("/screenings/{id}/movie/{newMovieId}")
     public ResponseEntity<Screening> replaceMovie(@PathVariable Integer id, @PathVariable Integer newMovieId) {
         Screening screening = screeningService.checkIfScreeningExists(id);
         Movie movie = movieService.getRequiredMovie(newMovieId);
@@ -71,5 +71,5 @@ public class SchedulingController {
         screening.calculateEndTime();
         Screening updatedScreening = screeningService.save(screening);
         return ResponseEntity.ok(updatedScreening);
-    }
+    }*/
 }

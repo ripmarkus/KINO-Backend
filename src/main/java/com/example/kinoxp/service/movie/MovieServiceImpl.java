@@ -1,6 +1,10 @@
 package com.example.kinoxp.service.movie;
 
+import com.example.kinoxp.DTO.movie.GenreRequest;
+import com.example.kinoxp.DTO.movie.MovieRequest;
+import com.example.kinoxp.model.movie.Genre;
 import com.example.kinoxp.model.movie.Movie;
+import com.example.kinoxp.repository.movie.GenreRepo;
 import com.example.kinoxp.repository.movie.MovieRepo;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,11 +15,13 @@ import java.util.Optional;
 
 @Service
 public class MovieServiceImpl implements MovieService {
-    
+
     private final MovieRepo movieRepo;
-    
-    public MovieServiceImpl(MovieRepo movieRepo) {
+    private final GenreRepo genreRepo;
+
+    public MovieServiceImpl(MovieRepo movieRepo, GenreRepo genreRepo) {
         this.movieRepo = movieRepo;
+        this.genreRepo = genreRepo;
     }
 
     public Movie getRequiredMovie(Integer id) {
@@ -27,19 +33,46 @@ public class MovieServiceImpl implements MovieService {
     public boolean existsById(Integer id) {
         return movieRepo.existsById(id);
     }
-    
+
     @Override
     public Optional<Movie> findById(Integer id) {
         return movieRepo.findById(id);
     }
-    
+
     @Override
     public List<Movie> findAll() {
         return movieRepo.findAll();
     }
-    
+
     @Override
     public Movie save(Movie movie) {
+        return movieRepo.save(movie);
+    }
+
+    public Movie createMovie(MovieRequest movieRequest) {
+        Movie movie = new Movie();
+        movie.setTitle(movieRequest.getTitle());
+        movie.setAgeLimit(movieRequest.getAgeLimit());
+        movie.setDuration(movieRequest.getDuration());
+        movie.setDescription(movieRequest.getDescription());
+
+        Genre genre = null;
+        GenreRequest g = movieRequest.getGenre();
+
+        if (g != null) {
+            if (g.getGenreId() != null) {
+                // 🔹 Existing genre
+                genre = genreRepo.findById(g.getGenreId())
+                        .orElseThrow(() -> new RuntimeException("Genre not found with ID: " + g.getGenreId()));
+            } else if (g.getGenreName() != null && !g.getGenreName().isEmpty()) {
+                // 🔹 New genre
+                Genre newGenre = new Genre();
+                newGenre.setGenreName(g.getGenreName());
+                genre = genreRepo.save(newGenre);
+            }
+        }
+
+        movie.setGenre(genre);
         return movieRepo.save(movie);
     }
     

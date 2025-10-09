@@ -10,6 +10,9 @@ import com.example.kinoxp.repository.Booking.ReservationSeatRepo;
 import com.example.kinoxp.repository.Theatre.ScreeningRepo;
 import com.example.kinoxp.repository.Theatre.SeatRepo;
 import com.example.kinoxp.repository.Theatre.TheatreRepo;
+import com.example.kinoxp.repository.employee.EmployeeRepo;
+import com.example.kinoxp.repository.movie.MovieRepo;
+import com.example.kinoxp.service.movie.MovieServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,6 +22,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.example.kinoxp.model.theatre.ScreeningStatus.SCHEDULED;
+
 @Service
 public class ScreeningServiceImpl implements ScreeningService {
     
@@ -26,16 +31,21 @@ public class ScreeningServiceImpl implements ScreeningService {
     private final TheatreRepo theatreRepo;
     private final SeatRepo seatRepo;
     private final ReservationSeatRepo reservationSeatRepo;
+    private final MovieRepo movieRepo;
+    private final EmployeeRepo employeeRepo;
 
 
     public ScreeningServiceImpl(ScreeningRepo screeningRepo,
                                 TheatreRepo theatreRepo,
                                 SeatRepo seatRepo,
-                                ReservationSeatRepo reservationSeatRepo) {
+                                ReservationSeatRepo reservationSeatRepo,
+                                MovieRepo movieRepo, EmployeeRepo employeeRepo) {
         this.screeningRepo = screeningRepo;
         this.theatreRepo = theatreRepo;
         this.seatRepo = seatRepo;
         this.reservationSeatRepo = reservationSeatRepo;
+        this.movieRepo = movieRepo;
+        this.employeeRepo = employeeRepo;
     }
 
     @Override
@@ -54,7 +64,14 @@ public class ScreeningServiceImpl implements ScreeningService {
     }
     
     @Override
-    public Screening save(Screening screening) {
+    public Screening save(Integer movieId, Integer theatreId, LocalDateTime startTime, Integer employeeId) {
+        Screening screening = new Screening();
+        screening.setMovie(movieRepo.findById(movieId).orElse(null));
+        screening.setTheatre(theatreRepo.findById(theatreId).orElse(null));
+        screening.setStartTime(startTime);
+        screening.calculateEndTime();
+        screening.setStatus(SCHEDULED);
+        screening.setOperator(employeeRepo.findById(employeeId).orElse(null));
         return screeningRepo.save(screening);
     }
     
@@ -98,6 +115,35 @@ public class ScreeningServiceImpl implements ScreeningService {
 
         return screeningRepo.save(screening);
     }
+
+    @Override
+    public Screening updateScreening(Integer id, Integer movieId, Integer theatreId, LocalDateTime startTime, Integer employeeId) {
+        Screening existing = screeningRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Screening not found"));
+
+        if (movieId != null) {
+            existing.setMovie(movieRepo.findById(movieId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found")));
+        }
+
+        if (theatreId != null) {
+            existing.setTheatre(theatreRepo.findById(theatreId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Theatre not found")));
+        }
+
+        if (startTime != null) {
+            existing.setStartTime(startTime);
+            existing.calculateEndTime();
+        }
+
+        if (employeeId != null) {
+            existing.setOperator(employeeRepo.findById(employeeId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found")));
+        }
+
+        return screeningRepo.save(existing);
+    }
+
 
     @Override
     public List<Seat> getAvailableSeats(Integer screeningId) {
