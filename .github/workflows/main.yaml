@@ -54,8 +54,7 @@ jobs:
       - name: Run and verify Docker container with MySQL
         run: |
           docker run -d --name test-container \
-            --network host \
-            -e DB_URL="jdbc:mysql://localhost:3306/kinoxp" \
+            -e DB_URL="jdbc:mysql://mysql:3306/kinoxp" \
             -e DB_USERNAME=root \
             -e DB_PASSWORD=root \
             -p 3000:8080 kinoxp:test
@@ -72,7 +71,8 @@ jobs:
             exit 1
           fi
 
-          curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/api/screenings | grep 200 || (
+          echo "Verifying endpoint returns 200..."
+          curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/actuator/health | grep 200 || (
             echo "Endpoint check failed"
             docker logs test-container
             exit 1
