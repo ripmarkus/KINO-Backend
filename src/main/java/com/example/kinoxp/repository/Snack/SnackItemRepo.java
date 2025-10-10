@@ -1,4 +1,4 @@
-package com.example.kinoxp.repository;
+package com.example.kinoxp.repository.Snack;
 
 import com.example.kinoxp.model.snack.SnackItem;
 import org.springframework.data.jpa.repository.JpaRepository;
