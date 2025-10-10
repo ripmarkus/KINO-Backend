@@ -2,22 +2,35 @@ name: Java CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
-  build-and-dockerize:
+  whatever:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-
-      - name: Set up Java 21
-        uses: actions/setup-java@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
+          java-version: "21"
+          distribution: "temurin"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}
+      - run: mvn test
+      - run: docker build . --tag hej-github:test
+      - run: |
+          docker run -d --name test-container -p 8080:8080 hej-github:test
+          docker sleep 30
+          curl -f http://localhost:8080/healthz || exit 1
+          docker stop test-container
+          docker rm test-container
+          #test
