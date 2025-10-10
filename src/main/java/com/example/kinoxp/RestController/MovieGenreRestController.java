@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/movies")
-@CrossOrigin(origins = "*")
 public class MovieGenreRestController {
 
     private final MovieService movieService;
@@ -51,7 +50,6 @@ public class MovieGenreRestController {
         return ResponseEntity.ok(movieService.save(movie));
     }
 
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteMovie(@PathVariable Integer id) {
         if (!movieService.existsById(id)) {
