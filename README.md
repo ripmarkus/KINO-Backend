@@ -76,9 +76,9 @@ docker compose logs app
 docker compose logs mysql
 ```
 
-## Opsætning
+## DB - SQL
 
-Database indstillinger ligger i `.env` filen. De nuværende værdier skulle virke som de er.
+Database DDL ligger i resorces mappen.
 
 ## Projektstruktur
 
