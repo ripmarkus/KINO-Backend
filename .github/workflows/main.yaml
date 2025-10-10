@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  whatever:
+  test-and-build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -24,11 +24,23 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ~/.m2/repository
-          key: maven-${{ hashFiles('**/pom.xml') }}
-      - run: mvn test
-      - run: docker build . --tag hej-github:test
-      - run: |
-          docker run -d --name test-container -p 8080:8080 hej-github:test
-          docker sleep 30
+          key: maven-${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}-maven-
+      - name: Run tests
+        run: ./mvnw test
+      - name: Build Docker image
+        run: docker build . --tag kinoxp:test
+      - name: Test Docker container
+        run: |
+          docker run -d --name test-container -p 3000:8080 kinoxp:test
+          sleep 30
+          # Test if container is running and responding
+          if docker ps | grep test-container; then
+            echo "Container is running successfully"
+          else
+            echo "Container failed to start"
+            exit 1
+          fi
           docker stop test-container
           docker rm test-container
