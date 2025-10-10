@@ -1,10 +1,9 @@
 package com.example.kinoxp.service.customer;
 
+import com.example.kinoxp.exception.EntityNotFoundException;
 import com.example.kinoxp.model.customer.Customer;
 import com.example.kinoxp.repository.customer.CustomerRepo;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +19,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     public Customer getRequiredCustomer(Integer id) {
         return customerRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Customer", id));
     }
 
     @Override
@@ -45,6 +44,8 @@ public class CustomerServiceImpl implements CustomerService {
     
     @Override
     public void deleteById(Integer id) {
+        customerRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Customer", id));
         customerRepo.deleteById(id);
     }
 }

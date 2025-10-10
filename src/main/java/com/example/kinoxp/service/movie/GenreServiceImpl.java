@@ -1,5 +1,6 @@
 package com.example.kinoxp.service.movie;
 
+import com.example.kinoxp.exception.EntityNotFoundException;
 import com.example.kinoxp.model.movie.Genre;
 import com.example.kinoxp.repository.movie.GenreRepo;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,11 @@ public class GenreServiceImpl implements GenreService {
     
     public GenreServiceImpl(GenreRepo genreRepo) {
         this.genreRepo = genreRepo;
+    }
+    
+    public Genre getRequiredGenre(Integer id) {
+        return genreRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Genre", id));
     }
 
     @Override
@@ -38,6 +44,8 @@ public class GenreServiceImpl implements GenreService {
     
     @Override
     public void deleteById(Integer id) {
+        genreRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Genre", id));
         genreRepo.deleteById(id);
     }
 }

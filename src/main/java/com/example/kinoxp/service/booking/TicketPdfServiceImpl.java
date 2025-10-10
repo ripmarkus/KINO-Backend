@@ -1,5 +1,7 @@
 package com.example.kinoxp.service.booking;
 
+import com.example.kinoxp.exception.EntityNotFoundException;
+import com.example.kinoxp.exception.ServiceException;
 import com.example.kinoxp.model.booking.Reservation;
 import com.example.kinoxp.model.booking.Ticket;
 import com.example.kinoxp.model.movie.Movie;
@@ -12,9 +14,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.google.zxing.common.BitMatrix;
 
@@ -41,7 +41,7 @@ public class TicketPdfServiceImpl implements TicketPdfService {
 
     public byte[] generateReservationPdf(Integer reservationId) {
         Reservation reservation = reservationRepo.findById(reservationId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found!"));
+                .orElseThrow(() -> new EntityNotFoundException("Reservation", reservationId));
 
         List<Ticket> tickets = ticketRepo.findByReservationIdWithSeats(reservationId);
 
@@ -92,7 +92,7 @@ public class TicketPdfServiceImpl implements TicketPdfService {
             return baos.toByteArray();
 
         } catch (Exception e) {
-            throw new RuntimeException("Error while creating PDF", e);
+            throw new ServiceException("Error while creating PDF", e);
         }
     }
 

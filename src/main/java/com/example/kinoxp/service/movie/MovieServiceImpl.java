@@ -1,14 +1,14 @@
 package com.example.kinoxp.service.movie;
 
+import com.example.kinoxp.exception.EntityNotFoundException;
+import com.example.kinoxp.exception.ServiceException;
 import com.example.kinoxp.DTO.movie.GenreRequest;
 import com.example.kinoxp.DTO.movie.MovieRequest;
 import com.example.kinoxp.model.movie.Genre;
 import com.example.kinoxp.model.movie.Movie;
 import com.example.kinoxp.repository.movie.GenreRepo;
 import com.example.kinoxp.repository.movie.MovieRepo;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +26,7 @@ public class MovieServiceImpl implements MovieService {
 
     public Movie getRequiredMovie(Integer id) {
         return movieRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Movie", id));
     }
 
     @Override
@@ -63,7 +63,7 @@ public class MovieServiceImpl implements MovieService {
             if (g.getGenreId() != null) {
                 // 🔹 Existing genre
                 genre = genreRepo.findById(g.getGenreId())
-                        .orElseThrow(() -> new RuntimeException("Genre not found with ID: " + g.getGenreId()));
+                        .orElseThrow(() -> new EntityNotFoundException("Genre", g.getGenreId()));
             } else if (g.getGenreName() != null && !g.getGenreName().isEmpty()) {
                 // 🔹 New genre
                 Genre newGenre = new Genre();
@@ -78,6 +78,8 @@ public class MovieServiceImpl implements MovieService {
     
     @Override
     public void deleteById(Integer id) {
+        movieRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Movie", id));
         movieRepo.deleteById(id);
     }
 }

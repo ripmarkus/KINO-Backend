@@ -1,5 +1,6 @@
 package com.example.kinoxp.service.booking;
 
+import com.example.kinoxp.exception.EntityNotFoundException;
 import com.example.kinoxp.DTO.booking.CreateReservationRequest;
 import com.example.kinoxp.model.booking.Reservation;
 import com.example.kinoxp.model.booking.ReservationSeat;
@@ -12,10 +13,8 @@ import com.example.kinoxp.repository.Theatre.SeatRepo;
 import com.example.kinoxp.service.customer.CustomerService;
 import com.example.kinoxp.service.employee.EmployeeService;
 import com.example.kinoxp.service.theatre.ScreeningService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -45,7 +44,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     public Reservation getRequiredReservation(Integer id) {
         return reservationRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Reservation", id));
     }
 
     @Override
@@ -70,6 +69,8 @@ public class ReservationServiceImpl implements ReservationService {
     
     @Override
     public void deleteById(Integer id) {
+        reservationRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Reservation", id));
         reservationRepo.deleteById(id);
     }
 
@@ -97,7 +98,7 @@ public class ReservationServiceImpl implements ReservationService {
             
             for (Integer seatId : request.getSeatIds()) {
                 Seat seat = seatRepo.findById(seatId)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Seat not found: " + seatId));
+                    .orElseThrow(() -> new EntityNotFoundException("Seat", seatId));
                 
                 ReservationSeat reservationSeat = new ReservationSeat();
                 reservationSeat.setReservation(reservation);

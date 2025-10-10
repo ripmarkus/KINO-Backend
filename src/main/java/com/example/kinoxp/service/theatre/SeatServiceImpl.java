@@ -1,11 +1,9 @@
 package com.example.kinoxp.service.theatre;
 
+import com.example.kinoxp.exception.EntityNotFoundException;
 import com.example.kinoxp.model.theatre.Seat;
-import com.example.kinoxp.repository.Booking.ReservationSeatRepo;
 import com.example.kinoxp.repository.Theatre.SeatRepo;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +19,7 @@ public class SeatServiceImpl implements SeatService {
 
     public Seat getRequiredSeat(Integer id) {
         return seatRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Seat not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Seat", id));
     }
 
     @Override
@@ -46,6 +44,8 @@ public class SeatServiceImpl implements SeatService {
     
     @Override
     public void deleteById(Integer id) {
+        seatRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Seat", id));
         seatRepo.deleteById(id);
     }
 

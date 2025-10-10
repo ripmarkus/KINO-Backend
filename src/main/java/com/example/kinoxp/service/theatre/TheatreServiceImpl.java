@@ -1,5 +1,6 @@
 package com.example.kinoxp.service.theatre;
 
+import com.example.kinoxp.exception.EntityNotFoundException;
 import com.example.kinoxp.model.theatre.Theatre;
 import com.example.kinoxp.repository.Theatre.TheatreRepo;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,11 @@ public class TheatreServiceImpl implements TheatreService {
     
     public TheatreServiceImpl(TheatreRepo theatreRepo) {
         this.theatreRepo = theatreRepo;
+    }
+    
+    public Theatre getRequiredTheatre(Integer id) {
+        return theatreRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Theatre", id));
     }
 
     @Override
@@ -38,6 +44,8 @@ public class TheatreServiceImpl implements TheatreService {
     
     @Override
     public void deleteById(Integer id) {
+        theatreRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Theatre", id));
         theatreRepo.deleteById(id);
     }
 }

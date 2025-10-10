@@ -1,5 +1,6 @@
 package com.example.kinoxp.service.snack;
 
+import com.example.kinoxp.exception.EntityNotFoundException;
 import com.example.kinoxp.model.snack.SnackItem;
 import com.example.kinoxp.repository.Snack.SnackItemRepo;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,11 @@ public class SnackItemServiceImpl implements SnackItemService {
     
     public SnackItemServiceImpl(SnackItemRepo snackItemRepo) {
         this.snackItemRepo = snackItemRepo;
+    }
+    
+    public SnackItem getRequiredSnackItem(Integer id) {
+        return snackItemRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("SnackItem", id));
     }
 
     @Override
@@ -38,6 +44,8 @@ public class SnackItemServiceImpl implements SnackItemService {
     
     @Override
     public void deleteById(Integer id) {
+        snackItemRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("SnackItem", id));
         snackItemRepo.deleteById(id);
     }
 }

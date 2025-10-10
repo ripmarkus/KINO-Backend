@@ -1,13 +1,12 @@
 package com.example.kinoxp.service.booking;
 
+import com.example.kinoxp.exception.EntityNotFoundException;
 import com.example.kinoxp.model.booking.Ticket;
 import com.example.kinoxp.model.booking.Reservation;
 import com.example.kinoxp.model.theatre.Seat;
 import com.example.kinoxp.repository.Booking.TicketRepo;
 import com.example.kinoxp.service.theatre.SeatService;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +25,7 @@ public class TicketServiceImpl implements TicketService {
 
     public Ticket getRequiredTicket(Integer id) {
         return ticketRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Ticket", id));
     }
 
     @Override
@@ -51,6 +50,8 @@ public class TicketServiceImpl implements TicketService {
     
     @Override
     public void deleteById(Integer id) {
+        ticketRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Ticket", id));
         ticketRepo.deleteById(id);
     }
 

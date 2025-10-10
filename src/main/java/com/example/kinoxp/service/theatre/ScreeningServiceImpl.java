@@ -1,5 +1,6 @@
 package com.example.kinoxp.service.theatre;
 
+import com.example.kinoxp.exception.EntityNotFoundException;
 import com.example.kinoxp.model.booking.Reservation;
 import com.example.kinoxp.model.booking.ReservationSeat;
 import com.example.kinoxp.model.theatre.Screening;
@@ -13,9 +14,7 @@ import com.example.kinoxp.repository.Theatre.TheatreRepo;
 import com.example.kinoxp.repository.employee.EmployeeRepo;
 import com.example.kinoxp.repository.movie.MovieRepo;
 import com.example.kinoxp.service.movie.MovieServiceImpl;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -77,6 +76,8 @@ public class ScreeningServiceImpl implements ScreeningService {
     
     @Override
     public void deleteById(Integer id) {
+        screeningRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Screening", id));
         screeningRepo.deleteById(id);
     }
 
@@ -88,7 +89,7 @@ public class ScreeningServiceImpl implements ScreeningService {
     @Override
     public Screening getRequiredScreening(Integer screeningId) {
         return screeningRepo.findByIdWithTheatre(screeningId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Screening not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Screening", screeningId));
     }
 
     @Override
@@ -109,7 +110,7 @@ public class ScreeningServiceImpl implements ScreeningService {
         if (updates.containsKey("theatreId")) {
             Integer newTheatreId = (Integer) updates.get("theatreId");
             Theatre newTheatre = theatreRepo.findById(newTheatreId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Theatre not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Theatre", newTheatreId));
             screening.setTheatre(newTheatre);
         }
 
@@ -119,16 +120,16 @@ public class ScreeningServiceImpl implements ScreeningService {
     @Override
     public Screening updateScreening(Integer id, Integer movieId, Integer theatreId, LocalDateTime startTime, Integer employeeId) {
         Screening existing = screeningRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Screening not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Screening", id));
 
         if (movieId != null) {
             existing.setMovie(movieRepo.findById(movieId)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found")));
+                    .orElseThrow(() -> new EntityNotFoundException("Movie", movieId)));
         }
 
         if (theatreId != null) {
             existing.setTheatre(theatreRepo.findById(theatreId)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Theatre not found")));
+                    .orElseThrow(() -> new EntityNotFoundException("Theatre", theatreId)));
         }
 
         if (startTime != null) {
@@ -138,7 +139,7 @@ public class ScreeningServiceImpl implements ScreeningService {
 
         if (employeeId != null) {
             existing.setOperator(employeeRepo.findById(employeeId)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found")));
+                    .orElseThrow(() -> new EntityNotFoundException("Employee", employeeId)));
         }
 
         return screeningRepo.save(existing);

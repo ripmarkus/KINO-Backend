@@ -1,7 +1,7 @@
 package com.example.kinoxp.service.booking;
 
+import com.example.kinoxp.exception.EntityNotFoundException;
 import com.example.kinoxp.model.booking.ReservationSeat;
-import com.example.kinoxp.model.theatre.Seat;
 import com.example.kinoxp.repository.Booking.ReservationSeatRepo;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,11 @@ public class ReservationSeatServiceImpl implements ReservationSeatService {
 
     public ReservationSeatServiceImpl(ReservationSeatRepo reservationSeatRepo) {
         this.reservationSeatRepo = reservationSeatRepo;
+    }
+    
+    public ReservationSeat getRequiredReservationSeat(Integer id) {
+        return reservationSeatRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("ReservationSeat", id));
     }
 
     @Override
@@ -39,6 +44,8 @@ public class ReservationSeatServiceImpl implements ReservationSeatService {
 
     @Override
     public void deleteById(Integer id) {
+        reservationSeatRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("ReservationSeat", id));
         reservationSeatRepo.deleteById(id);
     }
 

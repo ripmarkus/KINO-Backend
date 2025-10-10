@@ -1,10 +1,9 @@
 package com.example.kinoxp.service.employee;
 
+import com.example.kinoxp.exception.EntityNotFoundException;
 import com.example.kinoxp.model.employee.Employee;
 import com.example.kinoxp.repository.employee.EmployeeRepo;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,12 +39,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     
     @Override
     public void deleteById(Integer id) {
+        employeeRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Employee", id));
         employeeRepo.deleteById(id);
     }
     
     @Override
     public Employee getRequiredEmployee(Integer id) {
         return employeeRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Employee", id));
     }
 }
