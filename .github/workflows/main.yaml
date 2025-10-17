@@ -12,6 +12,8 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  FRONTEND_REPO: ripmarkus/KINO-Frontend
+  FRONTEND_IMAGE_NAME: ${{ github.repository_owner }}/kino-frontend
 
 jobs:
   test-and-build:
@@ -70,3 +72,21 @@ jobs:
          push: true
          tags: ${{ steps.meta.outputs.tags }}
          labels: ${{ steps.meta.outputs.labels }}
+
+  #checkout og build vores frontend
+
+      - name: Checkout frontend repository
+        uses: actions/checkout@v5
+        with:
+          repository: ${{ env.FRONTEND_REPO }}
+          path: frontend
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} 
+
+      - name: Build and push frontend Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}:latest
+
