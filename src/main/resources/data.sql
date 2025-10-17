@@ -2,7 +2,6 @@
 -- This file automatically loads realistic cinema data for testing
 
 -- Clear existing data (in correct order to handle foreign keys)
-SET FOREIGN_KEY_CHECKS = 0;
 DELETE FROM reservation_seat;
 DELETE FROM reservation;
 DELETE FROM ticket;

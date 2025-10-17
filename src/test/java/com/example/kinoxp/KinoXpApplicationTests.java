@@ -2,12 +2,13 @@ package com.example.kinoxp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
-class KinoXpApplicationTests {
+@ActiveProfiles("test")
 
+class KinoXpApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
