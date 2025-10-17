@@ -80,7 +80,6 @@ jobs:
         with:
           repository: ${{ env.FRONTEND_REPO }}
           path: frontend
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} 
 
       - name: Build and push frontend Docker image
         uses: docker/build-push-action@v6
