@@ -12,4 +12,6 @@ public interface CustomerService {
     Customer save(Customer customer);
     void deleteById(Integer id);
     Customer getRequiredCustomer(Integer id);
+
+    Optional<Customer> findByPhone(String rawPhone);
 }
