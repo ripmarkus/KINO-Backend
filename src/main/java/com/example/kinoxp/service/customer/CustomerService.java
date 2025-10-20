@@ -14,4 +14,6 @@ public interface CustomerService {
     Customer getRequiredCustomer(Integer id);
 
     Optional<Customer> findByPhone(String rawPhone);
+    Customer getOrCreateByPhone(String rawPhone, String name, String email);
+    Customer upsertByPhone(String rawPhone, String name, String email);
 }
