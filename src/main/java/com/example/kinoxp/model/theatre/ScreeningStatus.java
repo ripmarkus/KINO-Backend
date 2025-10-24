@@ -1,4 +1,4 @@
-package com.example.kinoxp.model.movie;
+package com.example.kinoxp.model.theatre;
 
 public enum ScreeningStatus {
     SCHEDULED,
